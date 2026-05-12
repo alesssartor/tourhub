@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tour</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    iframe { width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  fetch('tours.json')
+    .then(r => r.json())
+    .then(data => {
+      const tour = (data.tours || []).find(t => t.id === id);
+
+      if (!tour || !tour.supersplatUrl) {
+        document.body.innerHTML = '<h1>Tour not found</h1>';
+        return;
+      }
+
+      document.title = tour.title || 'Tour';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = tour.supersplatUrl;
+      iframe.allowFullscreen = true;
+      document.body.appendChild(iframe);
+    })
+    .catch(() => {
+      document.body.innerHTML = '<h1>Could not load tour</h1>';
+    });
+</script>
+</body>
+</html>
