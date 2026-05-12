@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tour Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:900px;margin:40px auto;padding:0 16px;}
+    a{color:#0366d6;}
+    .tour{margin:12px 0;}
+  </style>
+</head>
+<body>
+<h1>Tour Hub</h1>
+<p>Edit <code>tours.json</code> to add tour entries with a title and a published SuperSplat URL.</p>
+<ul id="list"></ul>
+<script>
+fetch('tours.json').then(r=>r.json()).then(data=>{
+  const ul=document.getElementById('list');
+  (data.tours||[]).forEach(t=>{
+    const li=document.createElement('li');
+    li.className='tour';
+    const a=document.createElement('a');
+    a.href='tour.html?id='+encodeURIComponent(t.id);
+    a.textContent=t.title;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+}).catch(()=>{
+  document.getElementById('list').innerHTML='<li style="color:#666">tours.json not found or invalid</li>';
+});
+</script>
+</body>
+</html>
