@@ -1,0 +1,9 @@
+{
+  "tours": [
+    {
+      "id": "sample",
+      "title": "Sample Tour",
+      "supersplatUrl": "https://superspl.at/editor"
+    }
+  ]
+}
